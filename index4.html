@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxor Joias - Carrinho</title>
+<title>Pulseiras - Luxor Joias</title>
 <style>
-  /* Reset CSS */
+  /* Reset do CSS */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
+  html, body {
+    height: 100%;
+  }
+
   body {
-    font-family: 'Lato', sans-serif;
-    color: #111;
-    background-color: #f5f5f7;
-    padding-bottom: 60px;
-    padding-top: 60px;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   header {
@@ -26,11 +26,7 @@
     color: #111;
     padding: 20px 0;
     text-align: center;
-    font-family: 'Cormorant Garamond', serif;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+    font-family: 'Lato', sans-serif;
   }
 
   header nav ul {
@@ -48,114 +44,55 @@
     font-weight: bold;
     font-size: 16px;
     text-transform: uppercase;
+  }
+
+  .destaque {
+    background-color: #f5f5f7;
+    padding: 30px 0;
+    text-align: center;
+    color: #111;
     font-family: 'Lato', sans-serif;
+    flex: 1;
   }
 
-  .cart-container {
-    max-width: 800px;
-    margin: 100px auto 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .cart-title {
-    font-size: 32px;
+  .destaque h1 {
+    font-size: 48px;
     margin-bottom: 20px;
   }
 
-  .cart-item {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0;
-    margin-bottom: 10px;
+  .destaque h1 span {
+    font-family: 'Cormorant Garamond', serif;
   }
 
-  .cart-item-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
+  .destaque p {
+    font-size: 20px;
+    margin-bottom: 40px;
   }
 
-  .cart-item-price {
-    font-size: 16px;
-    color: #777;
-  }
-
-  .button-container {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .button-container button {
-    background-color: #111;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-family: 'Lato', sans-serif;
-    cursor: pointer;
-    flex: 1;
-    margin: 0 5px;
-  }
-
-  .cart .clean-cart-button {
-    background-color: #fff;
-    color: #111;
-    border: 1px solid #111;
-  }
-
-  .button-container button:hover {
-    background-color: #333;
-  }
-
-  footer {
-    background-color: #fff;
-    padding: 10px 0;
-    text-align: center;
-    font-size: 14px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    font-family: 'Lato', sans-serif;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  #checkout-form {
-      display: none;
-  }
-
-  #checkout-form button[type="submit"] {
-    background-color: #111;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-family: 'Lato', sans-serif;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-   .card-container {
+  .card-container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 40px; 
   }
 
   .card {
     width: 300px;
-    margin: 60px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
     padding: 20px;
     text-align: left;
     color: #111;
     font-family: 'Lato', sans-serif;
-    text-decoration: none;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
   }
 
   .card img {
@@ -173,25 +110,51 @@
     color: #777;
   }
 
-  .card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  .card.expanded {
+    width: 40%;
+    margin: 20px auto 0;
+    box-shadow: none;
+    cursor: default;
   }
-   .botao {
-  display:inline;
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: #fffafa; 
-  color: #000000; 
-  text-decoration: none; 
-  border-radius: 5px; 
-  transition: background-color 0.3s;
-}
-  .botao:hover {
-  background-color: #cdcdcd; 
-}
-</style>
 
+  .card.expanded:hover {
+    transform: scale(1);
+  }
+
+  .card button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .card .buy-button {
+    background-color: #111;
+    color: #fff;
+    border: none;
+  }
+
+  .card .minimize-button {
+    background-color: #f5f5f7;
+    color: #111;
+    border: 1px solid #111;
+  }
+
+  footer {
+    background-color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -209,94 +172,54 @@
     </nav>
   </header>
 
-  <div class="cart-container">
-    <h1 class="cart-title">Seu Carrinho</h1>
-    <div id="cart-items">
-      <!-- JavaScript will populate this list with cart items -->
+  <section class="destaque">
+    <h1>Pulseiras Exclusivas</h1>
+    <p>Encontre a pulseira perfeita para complementar o seu estilo.</p>
+    <div class="card-container">
+      <div class="card">
+        <img src="pulseira 2.png" alt="Pulseira de Ouro">
+        <h2>Pulseira de Ouro</h2>
+        <p>A pulseira de ouro é uma peça clássica que adiciona um toque de elegância a qualquer look.</p>
+        <p>Preço: R$ 4.999,99</p>
+      </div>
+      <div class="card">
+        <img src="pulseira 3.png" alt="Pulseira de Prata">
+        <h2>Pulseira de Prata</h2>
+        <p>A pulseira de prata é uma escolha versátil que combina com qualquer estilo, do casual ao sofisticado.</p>
+        <p>Preço: R$ 2.999,99</p>
+      </div>
+      <div class="card">
+        <img src="Pulseira 6.png" alt="Pulseira de Diamante">
+        <h2>Pulseira de Diamantes</h2>
+        <p>A pulseira de diamantes é uma peça luxuosa que adiciona brilho e glamour ao seu visual.</p>
+        <p>Preço: R$ 9.999,99</p>
+      </div>
     </div>
-    <div class="button-container" id="button-container">
-      <button class="clean-cart-button" id="clean-cart-btn">Limpar Carrinho</button>
-      <button class="finish-purchase-btn" onclick="showCheckoutForm()">Finalizar Compra</button>
+    
+    <div class="card-container">
+      <div class="card">
+        <img src="pulseira 5.png" alt="Pulseira de coração">
+        <h2>Pulseira de Coração</h2>
+        <p>A pulseira de coração é uma escolha elegante que adiciona um toque de cor e sofisticação ao seu look.</p>
+        <p>Preço: R$ 7.499,99</p>
+      </div>
+      <div class="card">
+        <img src="pulseira 1.png" alt="Pulseira de pérolas">
+        <h2>Pulseira de Pérolas</h2>
+        <p>A pulseira de pérolas é uma peça luxuosa que reflete beleza e estilo.</p>
+        <p>Preço: R$ 12.999,99</p>
+      </div>
+      <div class="card">
+        <img src="pulseira 4.png" alt="Pulseira de Safira">
+        <h2>Pulseira de Brilhantes</h2>
+        <p>A pulseira de brilhantes é uma escolha elegante que adiciona um toque de sofisticação ao seu visual.</p>
+        <p>Preço: R$ 6.999,99</p>
+      </div>
     </div>
-    <div id="checkout-form">
-      <h2>Checkout</h2>
-      <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required><br><br>
-        <button type="submit">Confirm Purchase</button>
-      </form>
-    </div>
-  </div>
+  </section>
 
   <footer>
     <p>&copy; 2024 Luxor Joias. Todos os direitos reservados.</p>
   </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Get the cart from localStorage
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-      let cartItemsContainer = document.getElementById('cart-items');
-      cartItemsContainer.innerHTML = '';
-  
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p>O seu carrinho está vazio</p>';
-      } else {
-        let totalPrice = 0;
-  
-        cart.forEach(function(item) {
-          let cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <div class="cart-item-name">${item.name}</div>
-            <div class="cart-item-price">Preço: R$ ${formatPrice(item.price)}</div>
-          `;
-          cartItemsContainer.appendChild(cartItem);
-  
-          totalPrice += item.price; // Summing the price of each item to the total
-        });
-  
-        let totalPriceElement = document.createElement('div');
-        totalPriceElement.classList.add('cart-item-total');
-        totalPriceElement.textContent = `Total: R$ ${formatPrice(totalPrice)}`;
-        cartItemsContainer.appendChild(totalPriceElement);
-      }
-  
-      function formatPrice(price) {
-        return price.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      }
-  
-      // Handle cleaning the cart
-      document.getElementById('clean-cart-btn').addEventListener('click', function() {
-        localStorage.removeItem('cart');
-        window.location.reload();
-      });
-  
-      // Handle checkout form submission
-      document.getElementById('checkout-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Generate QR code
-        generateQRCode();
-      });
-    });
-  
-    function showCheckoutForm() {
-      document.getElementById('checkout-form').style.display = 'block';
-      document.getElementById('button-container').style.display = 'none';
-    }
-  
-    function generateQRCode() {
-    // Display static QR code image
-    let qrCodeContainer = document.createElement('div');
-    qrCodeContainer.innerHTML = '<img src="QR.png" alt="QR Code">';
-    document.querySelector('.cart-container').appendChild(qrCodeContainer);
-
-  }
-  </script>
 </body>
-</html>
+</html>          
