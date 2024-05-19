@@ -3,22 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxor Joias - Joias e Relógios de Luxo</title>
+<title>Luxor Joias - Luxo e Elegância</title>
+
 <style>
-  /* Reset CSS */
+  /* Reset do CSS */
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
 
-  /* Estilos do Cabeçalho */
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
   header {
     background-color: #fff;
     color: #111;
     padding: 20px 0;
     text-align: center;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Lato', sans-serif;
   }
 
   header nav ul {
@@ -38,18 +47,22 @@
     text-transform: uppercase;
   }
 
-  /* Estilos da Seção de Destaque */
   .destaque {
     background-color: #f5f5f7;
-    padding: 100px 0;
+    padding: 30px 0;
     text-align: center;
     color: #111;
     font-family: 'Lato', sans-serif;
+    flex: 1;
   }
 
   .destaque h1 {
-    font-size: 48px;
+    font-size: 96px;
     margin-bottom: 20px;
+  }
+
+  .destaque h1 span {
+    font-family: 'Lato', sans-serif;
   }
 
   .destaque p {
@@ -57,7 +70,6 @@
     margin-bottom: 40px;
   }
 
-  /* Estilos dos Cards de Venda */
   .card-container {
     display: flex;
     justify-content: center;
@@ -75,6 +87,13 @@
     text-align: left;
     color: #111;
     font-family: 'Lato', sans-serif;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
   }
 
   .card img {
@@ -91,7 +110,53 @@
   .card p {
     color: #777;
   }
+
+  .card.expanded {
+    width: 40%;
+    margin: 20px auto 0;
+    box-shadow: none;
+    cursor: default;
+  }
+
+  .card.expanded:hover {
+    transform: scale(1);
+  }
+
+  .card button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .card .buy-button {
+    background-color: #111;
+    color: #fff;
+    border: none;
+  }
+
+  .card .minimize-button {
+    background-color: #f5f5f7;
+    color: #111;
+    border: 1px solid #111;
+  }
+
+  footer {
+    background-color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  }
+
 </style>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Lato&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -101,36 +166,35 @@
         <li><a href="index.html"><img src="diamond.png" alt="Luxor" style="height: 15px; width: 15px;"></a></li>
         <li><a href="index2.html">Aneis</a></li>
         <li><a href="index3.html">Colares</a></li>
-        <li><a href="index4.html">Relógios</a></li>
-        <li><a href="index5.html">Pulseiras</a></li>
-        <li><a href="index6.html">Brincos</a></li>
-        <li><a href="index7.html">Sobre Nós</a></li>
-        <li><a href="index8.html"><img src="cart.png" alt="Carrinho" style="height: 15px; width: 15px;"></a></li>
+        <li><a href="index4.html">Pulseiras</a></li>
+        <li><a href="index5.html">Brincos</a></li>
+        <li><a href="index6.html">Sobre Nós</a></li>
+        <li><a href="index7.html"><img src="cart.png" alt="Carrinho" style="height: 15px; width: 15px;"></a></li>
       </ul>
     </nav>
   </header>
 
   <section class="destaque">
-    <h1>Descubra a Elegância com Luxor Joias</h1>
-    <p>Encontre as joias e relógios mais luxuosos para complementar o seu estilo.</p>
+    <h1><span>Luxor Joias</span></h1>
+    <p>Encontre as joias mais luxuosas para complementar o seu estilo.</p>
     <div class="card-container">
-      <div class="card">
-        <img src="https://via.placeholder.com/300x200" alt="Anel de Diamante">
+      <div class="card" data-price="2990.00" onclick="expandCard(event, this)">
+        <img src="Anel Ouro Branco Turmalina Verde e Diamantes.webp" alt="Anel de Diamante">
         <h2>Anel de Diamante</h2>
         <p>O anel de diamante é uma peça clássica que transmite elegância e sofisticação.</p>
-        <p>Preço: R$ 10.999,99</p>
+        <p>R$ 2.990,00</p>
       </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/300x200" alt="Relógio de Ouro">
-        <h2>Relógio de Ouro</h2>
+      <div class="card" data-price="16750.00" onclick="expandCard(event, this)">
+        <img src="Pulseira Ouro Perola Safiras Incolores.webp" alt="Relógio de Ouro">
+        <h2>Pulseira de Ouro</h2>
         <p>O relógio de ouro é uma obra-prima da relojoaria, combinando estilo e precisão.</p>
-        <p>Preço: R$ 8.499,99</p>
+        <p>Preço: R$ 16.750,00</p>
       </div>
-      <div class="card">
-        <img src="https://via.placeholder.com/300x200" alt="Pulseira de Prata">
-        <h2>Pulseira de Prata</h2>
+      <div class="card" data-price="3890.00" onclick="expandCard(event, this)">
+        <img src="Colar Ouro Topazios.webp" alt="Pulseira de Prata">
+        <h2>Colar de Ouro</h2>
         <p>A pulseira de prata é uma escolha versátil para complementar qualquer look com elegância.</p>
-        <p>Preço: R$ 1.999,99</p>
+        <p>Preço: R$ 3.890,00</p>
       </div>
     </div>
   </section>
@@ -138,5 +202,60 @@
   <footer>
     <p>&copy; 2024 Luxor Joias. Todos os direitos reservados.</p>
   </footer>
+
+  <script>
+    function expandCard(event, card) {
+      event.stopPropagation(); // Prevent the click event from bubbling up
+  
+      // Minimize any already expanded card
+      const expandedCard = document.querySelector('.card.expanded');
+      if (expandedCard) {
+        minimizeCard(event, expandedCard);
+      }
+  
+      // Expand the clicked card
+      card.classList.add('expanded');
+      card.innerHTML += `
+        <button class="buy-button" onclick="addToCart(event, this.parentNode)">Comprar</button>
+        <button class="minimize-button" onclick="minimizeCard(event, this.parentNode)">Minimizar</button>
+      `;
+  
+      // Hide other cards
+      document.querySelectorAll('.card:not(.expanded)').forEach(c => c.style.display = 'none');
+    }
+  
+    function minimizeCard(event, card) {
+      event.stopPropagation(); // Prevent the click event from bubbling up
+  
+      // Remove expanded class and buttons
+      card.classList.remove('expanded');
+      card.querySelector('.buy-button').remove();
+      card.querySelector('.minimize-button').remove();
+  
+      // Show all cards
+      document.querySelectorAll('.card').forEach(c => c.style.display = 'block');
+    }
+  
+    function addToCart(event, card) {
+      event.stopPropagation(); // Prevent the click event from bubbling up
+  
+      // Retrieve cart data from localStorage
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+      // Extracting item details from the card
+      let itemName = card.querySelector('h2').textContent;
+      let itemPrice = parseFloat(card.dataset.price); // Retrieve price from data attribute
+  
+      // Add the item to the cart
+      cart.push({ name: itemName, price: itemPrice });
+  
+      // Store the updated cart data back to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+  
+      // Redirect the user to the cart page after adding the item
+      window.location.href = 'index7.html';
+    }
+  </script>
+  
 </body>
 </html>
