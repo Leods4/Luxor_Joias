@@ -28,6 +28,11 @@
     padding: 20px 0;
     text-align: center;
     font-family: 'Lato', sans-serif;
+    position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     z-index: 999;
   }
 
   header nav ul {
@@ -57,8 +62,9 @@
   }
 
   .destaque h1 {
-    font-size: 96px;
+    font-size: 144px;
     margin-bottom: 20px;
+    margin-top: 40px;
   }
 
   .destaque h1 span {
@@ -78,7 +84,10 @@
   }
 
   .card {
-    width: 300px;
+    width: calc(33.33% - 40px);
+    margin: 20px;
+    max-width: 450px;
+    min-width: 350px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -112,7 +121,8 @@
   }
 
   .card.expanded {
-    width: 40%;
+    max-width: none;
+    width: 45%;
     margin: 20px auto 0;
     box-shadow: none;
     cursor: default;
@@ -148,13 +158,18 @@
     padding: 10px 0;
     text-align: center;
     font-size: 14px;
-    position: fixed;
     bottom: 0;
     width: 100%;
     font-family: 'Lato', sans-serif;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   }
 
+  @media (min-width: 768px) {
+  .card {
+    width: calc(33.33% - 60px);
+    margin: 15px;
+  }
+}
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Lato&display=swap" rel="stylesheet">
@@ -205,54 +220,44 @@
 
   <script>
     function expandCard(event, card) {
-      event.stopPropagation(); // Prevent the click event from bubbling up
-  
-      // Minimize any already expanded card
+      event.stopPropagation(); 
+
       const expandedCard = document.querySelector('.card.expanded');
       if (expandedCard) {
         minimizeCard(event, expandedCard);
       }
   
-      // Expand the clicked card
       card.classList.add('expanded');
       card.innerHTML += `
         <button class="buy-button" onclick="addToCart(event, this.parentNode)">Comprar</button>
         <button class="minimize-button" onclick="minimizeCard(event, this.parentNode)">Minimizar</button>
       `;
   
-      // Hide other cards
       document.querySelectorAll('.card:not(.expanded)').forEach(c => c.style.display = 'none');
     }
   
     function minimizeCard(event, card) {
-      event.stopPropagation(); // Prevent the click event from bubbling up
+      event.stopPropagation();
   
-      // Remove expanded class and buttons
       card.classList.remove('expanded');
       card.querySelector('.buy-button').remove();
       card.querySelector('.minimize-button').remove();
   
-      // Show all cards
       document.querySelectorAll('.card').forEach(c => c.style.display = 'block');
     }
   
     function addToCart(event, card) {
-      event.stopPropagation(); // Prevent the click event from bubbling up
+      event.stopPropagation();
   
-      // Retrieve cart data from localStorage
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
   
-      // Extracting item details from the card
       let itemName = card.querySelector('h2').textContent;
-      let itemPrice = parseFloat(card.dataset.price); // Retrieve price from data attribute
+      let itemPrice = parseFloat(card.dataset.price);
   
-      // Add the item to the cart
       cart.push({ name: itemName, price: itemPrice });
   
-      // Store the updated cart data back to localStorage
       localStorage.setItem('cart', JSON.stringify(cart));
-  
-      // Redirect the user to the cart page after adding the item
+
       window.location.href = 'index7.html';
     }
   </script>
