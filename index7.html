@@ -26,11 +26,12 @@
     color: #111;
     padding: 20px 0;
     text-align: center;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Lato', sans-serif;
     position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+     top: 0;
+     left: 0;
+     right: 0;
+     z-index: 999;
   }
 
   header nav ul {
@@ -53,7 +54,8 @@
 
   .cart-container {
     max-width: 800px;
-    margin: 100px auto 20px;
+    margin: 30px auto 20px;
+    margin-bottom: 30px;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -115,11 +117,11 @@
     padding: 10px 0;
     text-align: center;
     font-size: 14px;
-    position: fixed;
     bottom: 0;
     width: 100%;
     font-family: 'Lato', sans-serif;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
   }
 
   #checkout-form {
@@ -177,6 +179,7 @@
     transform: scale(1.01);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
+  
    .botao {
   display:inline;
   padding: 10px 20px;
@@ -187,6 +190,7 @@
   border-radius: 5px; 
   transition: background-color 0.3s;
 }
+
   .botao:hover {
   background-color: #cdcdcd; 
 }
@@ -273,8 +277,8 @@
   
       // Handle cleaning the cart
       document.getElementById('clean-cart-btn').addEventListener('click', function() {
-        localStorage.removeItem('cart');
-        window.location.reload();
+    localStorage.removeItem('cart');
+    window.location.reload();
       });
   
       // Handle checkout form submission
