@@ -19,6 +19,7 @@
     padding-bottom: 60px;
     padding-top: 60px;
     margin: 0;
+    text-align: center;
   }
 
   header {
@@ -28,10 +29,10 @@
     text-align: center;
     font-family: 'Lato', sans-serif;
     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
   }
 
   header nav ul {
@@ -52,10 +53,9 @@
     font-family: 'Lato', sans-serif;
   }
 
-  .cart-container {
-    max-width: 800px;
+  .container {
+    max-width: 400px;
     margin: 30px auto 20px;
-    margin-bottom: 30px;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -63,7 +63,7 @@
   }
 
   .cart-title {
-    font-size: 32px;
+    font-size: 48px;
     margin-bottom: 20px;
   }
 
@@ -102,14 +102,16 @@
     margin: 0 5px;
   }
 
-  .cart .clean-cart-button {
+  .button-container .clean-cart-button {
     background-color: #fff;
     color: #111;
     border: 1px solid #111;
   }
 
-  .button-container button:hover {
-    background-color: #333;
+  .button-container .clean-cart-button:hover {
+    background-color: #fff;
+    color: #111;
+    border: 1px solid #333;
   }
 
   footer {
@@ -125,7 +127,17 @@
   }
 
   #checkout-form {
-      display: none;
+    display: none;
+  }
+
+  #checkout-form h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  #qr-code {
+    font-size: 32px;
+    display: none;
   }
 
   #checkout-form button[type="submit"] {
@@ -136,64 +148,7 @@
     font-size: 16px;
     font-family: 'Lato', sans-serif;
     cursor: pointer;
-    margin-top: 20px;
   }
-   .card-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 40px; 
-  }
-
-  .card {
-    width: 300px;
-    margin: 60px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: left;
-    color: #111;
-    font-family: 'Lato', sans-serif;
-    text-decoration: none;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .card img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-
-  .card h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  .card p {
-    color: #777;
-  }
-
-  .card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-   .botao {
-  display:inline;
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: #fffafa; 
-  color: #000000; 
-  text-decoration: none; 
-  border-radius: 5px; 
-  transition: background-color 0.3s;
-}
-
-  .botao:hover {
-  background-color: #cdcdcd; 
-}
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond&family=Lato&display=swap" rel="stylesheet">
@@ -212,37 +167,37 @@
       </ul>
     </nav>
   </header>
-
-  <div class="cart-container">
+  <div class="container" id="cart-container">
     <h1 class="cart-title">Seu Carrinho</h1>
     <div id="cart-items">
-      <!-- JavaScript will populate this list with cart items -->
+      <!-- JavaScript vai preencher esta lista com itens do carrinho -->
     </div>
     <div class="button-container" id="button-container">
       <button class="clean-cart-button" id="clean-cart-btn">Limpar Carrinho</button>
       <button class="finish-purchase-btn" onclick="showCheckoutForm()">Finalizar Compra</button>
     </div>
-    <div id="checkout-form">
-      <h2>Checkout</h2>
-      <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="address">Address:</label>
-        <input type="text" id="address" name="address" required><br><br>
-        <button type="submit">Confirm Purchase</button>
-      </form>
-    </div>
   </div>
-
+  <div class="container" id="checkout-form">
+    <h2>Checkout</h2>
+    <form id="simple-checkout-form">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" name="name" placeholder="Digite seu nome" required oninvalid="this.setCustomValidity('Por favor, preencha este campo')" oninput="setCustomValidity('')"><br><br>
+      <label for="address">Endereço:</label>
+      <input type="text" id="address" name="address" placeholder="Digite seu endereço" required oninvalid="this.setCustomValidity('Por favor, preencha este campo')" oninput="setCustomValidity('')"><br><br>
+      <button type="submit">Confirmar Compra</button>
+    </form>
+  </div>
+  <div class="container" id="qr-code">
+    <h2>Código QR</h2>
+    <div id="qr-code-container"></div>
+  </div>
   <footer>
     <p>&copy; 2024 Luxor Joias. Todos os direitos reservados.</p>
   </footer>
-
+  
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Get the cart from localStorage
+      // Obter o carrinho do localStorage
       let cart = JSON.parse(localStorage.getItem('cart')) || [];
   
       let cartItemsContainer = document.getElementById('cart-items');
@@ -262,7 +217,7 @@
           `;
           cartItemsContainer.appendChild(cartItem);
   
-          totalPrice += item.price; // Summing the price of each item to the total
+          totalPrice += item.price; // Somando o preço de cada item ao total
         });
   
         let totalPriceElement = document.createElement('div');
@@ -275,32 +230,30 @@
         return price.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
       }
   
-      // Handle cleaning the cart
+      // Lidar com a limpeza do carrinho
       document.getElementById('clean-cart-btn').addEventListener('click', function() {
-    localStorage.removeItem('cart');
-    window.location.reload();
-      });
-  
-      // Handle checkout form submission
-      document.getElementById('checkout-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Generate QR code
-        generateQRCode();
+        localStorage.removeItem('cart');
+        window.location.reload();
       });
     });
   
     function showCheckoutForm() {
+      document.getElementById('cart-container').style.display = 'none';
       document.getElementById('checkout-form').style.display = 'block';
-      document.getElementById('button-container').style.display = 'none';
     }
+
+    document.getElementById('simple-checkout-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      document.getElementById('checkout-form').style.display = 'none';
+      document.getElementById('qr-code').style.display = 'block';
+      generateQRCode();
+    });
   
     function generateQRCode() {
-    // Display static QR code image
-    let qrCodeContainer = document.createElement('div');
-    qrCodeContainer.innerHTML = '<img src="QR.png" alt="QR Code">';
-    document.querySelector('.cart-container').appendChild(qrCodeContainer);
-
-  }
+      // Exibir imagem de código QR estática
+      let qrCodeContainer = document.getElementById('qr-code-container');
+      qrCodeContainer.innerHTML = '<img src="QR.png" alt="QR Code">';
+    }
   </script>
 </body>
 </html>
