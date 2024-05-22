@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luxor Joias - Carrinho</title>
+
 <style>
   * {
     margin: 0;
@@ -32,6 +33,7 @@
     left: 0;
     right: 0;
     z-index: 999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   header nav ul {
@@ -46,8 +48,7 @@
   header nav ul li a {
     text-decoration: none;
     color: #462222;
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     text-transform: uppercase;
     font-family: 'Lato', sans-serif;
   }
@@ -64,6 +65,7 @@
   .cart-title {
     font-size: 48px;
     margin-bottom: 20px;
+    color: #b08d57;
   }
 
   .cart-item {
@@ -74,13 +76,13 @@
 
   .cart-item-name {
     font-size: 24px;
-    font-weight: bold;
     margin-bottom: 5px;
   }
 
   .cart-item-price {
     font-size: 16px;
-    color: #fff;
+    color: #b08d57;
+    margin-bottom: 5px;
   }
 
   .button-container {
@@ -107,12 +109,6 @@
     border: 1px solid #b08d57;
   }
 
-  .button-container .clean-cart-button:hover {
-    background-color: #fff;
-    color: #462222;
-    border: 1px solid #fff;
-  }
-
   footer {
     background-color: #fff;
     padding: 10px 0;
@@ -132,15 +128,23 @@
   #checkout-form h2 {
     font-size: 48px;
     margin-bottom: 20px;
+    color: #b08d57;
   }
 
   #qr-code {
     font-size: 32px;
     display: none;
+    color: #b08d57;
+  }
+
+  #qr-code p {
+    font-size: 20px;
+    color: #462222;
+    margin-top: 10px;
   }
 
   #checkout-form button[type="submit"] {
-    background-color: #462222;
+    background-color: #b08d57;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -161,7 +165,7 @@
         <li><a href="index3.html">Colares</a></li>
         <li><a href="index4.html">Pulseiras</a></li>
         <li><a href="index5.html">Brincos</a></li>
-        <li><a href="index6.html">Sobre Nós</a></li>
+        <li><a href="index6.html">Luxor</a></li>
         <li><a href="index7.html"><img src="cart.png" alt="Carrinho" style="height: 15px; width: 15px;"></a></li>
       </ul>
     </nav>
@@ -172,7 +176,7 @@
     </div>
     <div class="button-container" id="button-container">
       <button class="clean-cart-button" id="clean-cart-btn">Limpar Carrinho</button>
-      <button class="finish-purchase-btn" onclick="showCheckoutForm()">Finalizar Compra</button>
+      <button class="finish-purchase-btn" id="finish-purchase-btn">Finalizar Compra</button>
     </div>
   </div>
   <div class="container" id="checkout-form">
@@ -187,6 +191,7 @@
   </div>
   <div class="container" id="qr-code">
     <h2>Código QR</h2>
+    <p>Código para pagamento via PIX.</p>
     <div id="qr-code-container"></div>
   </div>
   <footer>
@@ -195,63 +200,69 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Obter o carrinho do localStorage
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-      let cartItemsContainer = document.getElementById('cart-items');
-      cartItemsContainer.innerHTML = '';
-  
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p>O seu carrinho está vazio</p>';
-      } else {
-        let totalPrice = 0;
-  
-        cart.forEach(function(item) {
-          let cartItem = document.createElement('div');
-          cartItem.classList.add('cart-item');
-          cartItem.innerHTML = `
-            <div class="cart-item-name">${item.name}</div>
-            <div class="cart-item-price">Preço: R$ ${formatPrice(item.price)}</div>
-          `;
-          cartItemsContainer.appendChild(cartItem);
-  
-          totalPrice += item.price; // Somando o preço de cada item ao total
-        });
-  
-        let totalPriceElement = document.createElement('div');
-        totalPriceElement.classList.add('cart-item-total');
-        totalPriceElement.textContent = `Total: R$ ${formatPrice(totalPrice)}`;
-        cartItemsContainer.appendChild(totalPriceElement);
-      }
-  
-      function formatPrice(price) {
-        return price.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      }
-  
-      // Lidar com a limpeza do carrinho
-      document.getElementById('clean-cart-btn').addEventListener('click', function() {
-        localStorage.removeItem('cart');
-        window.location.reload();
-      });
-    });
-  
-    function showCheckoutForm() {
-      document.getElementById('cart-container').style.display = 'none';
-      document.getElementById('checkout-form').style.display = 'block';
-    }
 
-    document.getElementById('simple-checkout-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      document.getElementById('checkout-form').style.display = 'none';
-      document.getElementById('qr-code').style.display = 'block';
-      generateQRCode();
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  let cartItemsContainer = document.getElementById('cart-items');
+  cartItemsContainer.innerHTML = '';
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = '<p>O seu carrinho está vazio</p>';
+  } else {
+    let totalPrice = 0;
+
+    cart.forEach(function(item) {
+      let cartItem = document.createElement('div');
+      cartItem.classList.add('cart-item');
+      cartItem.innerHTML = `
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">Preço: R$ ${formatPrice(item.price)}</div>
+      `;
+      cartItemsContainer.appendChild(cartItem);
+
+      totalPrice += item.price;
     });
-  
-    function generateQRCode() {
-      // Exibir imagem de código QR estática
-      let qrCodeContainer = document.getElementById('qr-code-container');
-      qrCodeContainer.innerHTML = '<img src="QR.png" alt="QR Code">';
+
+    let totalPriceElement = document.createElement('div');
+    totalPriceElement.classList.add('cart-item-total');
+    totalPriceElement.textContent = `Total: R$ ${formatPrice(totalPrice)}`;
+    cartItemsContainer.appendChild(totalPriceElement);
+  }
+
+  function formatPrice(price) {
+    return price.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  document.getElementById('clean-cart-btn').addEventListener('click', function() {
+    localStorage.removeItem('cart');
+    window.location.reload();
+  });
+
+  document.querySelector('.finish-purchase-btn').addEventListener('click', function() {
+    if (cart.length === 0) {
+      alert('Seu carrinho está vazio. Adicione itens antes de finalizar a compra.');
+    } else {
+      showCheckoutForm();
     }
+  });
+});
+
+function showCheckoutForm() {
+  document.getElementById('cart-container').style.display = 'none';
+  document.getElementById('checkout-form').style.display = 'block';
+}
+
+document.getElementById('simple-checkout-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  document.getElementById('checkout-form').style.display = 'none';
+  document.getElementById('qr-code').style.display = 'block';
+  generateQRCode();
+});
+
+function generateQRCode() {
+  let qrCodeContainer = document.getElementById('qr-code-container');
+  qrCodeContainer.innerHTML = '<img src="QR.png" alt="QR Code">';
+}
   </script>
 </body>
 </html>
